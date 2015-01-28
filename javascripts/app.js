@@ -24,10 +24,17 @@ var main = function () {
 				$("main .photos").append($img);
 				$img.fadeIn();
 				
-				setTimeout(function () {
+				var time_id = setTimeout(function () {
 					photoIndex = (photoIndex + 1) % flickrResponse.items.length;
 					displayPhoto(photoIndex);
 				}, 3000);
+
+                $(".search-input button").on("click", function (event) {
+                    clearTimeout(time_id);
+                });
+                $(".search-input input").on("keypress", function (event) {
+                    clearTimeout(time_id);
+                });
 			};
 			displayPhoto(0);
 		});
@@ -38,18 +45,8 @@ var main = function () {
 	});
 	$(".search-input input").on("keypress", function(event) {
 		if (event.keyCode === 13) {
-			getSearchWord();
-		}
-	});
-	
-	$(".search-input button").on("click", function (event) {
-		var $new_word;
-		
-		if ($(".search-input input").val() !== "") {
-			$new_word = $("<p>").text($(".search-input input").val());
-			$(".photos").append($new_word);
-			$(".search-input input").val("");
-		}
+            getSearchWord();
+        }
 	});
 };
 
